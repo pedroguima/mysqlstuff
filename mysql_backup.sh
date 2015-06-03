@@ -36,7 +36,7 @@ for DATABASE in $DATABASES; do
         else
                 find $BACKUP_DIR/$DATABASE -type f -iname "*.bz2" -mtime +$RETENTION_DAYS -exec rm -f {} \;
         fi
-        $MYSQLDUMP -u $USER -p$PW $DATABASE --skip-opt 2>/dev/null | $BZIP2 > $BACKUP_DIR/$DATABASE/$DATABASE-$DATE.sql.bz2
+        $MYSQLDUMP -u $USER -p$PW $DATABASE --skip-extended-insert 2>/dev/null | $BZIP2 > $BACKUP_DIR/$DATABASE/$DATABASE-$DATE.sql.bz2
         res=$?
 
         if [ ${PIPESTATUS[0]} -ne 0 ] || [ $res -ne 0 ]; then
